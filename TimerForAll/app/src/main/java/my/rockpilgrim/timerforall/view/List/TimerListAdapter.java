@@ -1,4 +1,4 @@
-package my.rockpilgrim.timerforall.List;
+package my.rockpilgrim.timerforall.view.List;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import my.rockpilgrim.timerforall.R;
-import my.rockpilgrim.timerforall.Timer.TimerHolder;
+import my.rockpilgrim.timerforall.presenter.Timer.TimerPresenter;
 
 
 public class TimerListAdapter extends RecyclerView.Adapter<TimerListHolder> {
 
-    private TimerHolder timerHolder;
+    private TimerPresenter timerPresenter;
 
     public TimerListAdapter() {
-        timerHolder = new TimerHolder();
+        timerPresenter = new TimerPresenter();
     }
 
     @NonNull
@@ -31,15 +31,15 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TimerListHolder timerListHolder, int index) {
-        timerListHolder.setTimerHolder(timerHolder);
-        if (timerHolder.getTimer(index) != null) {
+        timerListHolder.setPresenter(timerPresenter);
+//        if (timerPresenter.getTimer(index) != null) {
             timerListHolder.bindView(index);
-        }
+//        }
     }
 
 
     @Override
     public int getItemCount() {
-        return timerHolder != null ? timerHolder.size() : 0;
+        return timerPresenter != null ? timerPresenter.size() : 0;
     }
 }

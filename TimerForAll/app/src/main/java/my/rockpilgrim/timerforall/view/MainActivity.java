@@ -1,4 +1,4 @@
-package my.rockpilgrim.timerforall.List;
+package my.rockpilgrim.timerforall.view;
 
 import android.os.Bundle;
 
@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import my.rockpilgrim.timerforall.R;
+import my.rockpilgrim.timerforall.view.List.TimerListAdapter;
 
-public class MainActivityTimerList extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TimerListAdapter listAdapter;
@@ -17,14 +18,14 @@ public class MainActivityTimerList extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.timer_list);
+        setContentView(R.layout.main_activity);
 
         listAdapter = new TimerListAdapter();
 
         recyclerView = findViewById(R.id.recycler_view);
 
         // More productivity
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);

@@ -1,4 +1,4 @@
-package my.rockpilgrim.timerforall.WTesting;
+package my.rockpilgrim.timerforall.view._test;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -41,13 +41,11 @@ public class TimerFragment extends AppCompatActivity {
     }
 
     private void createTimer(int time) {
-        timer = new CountDownTimer(6 * 1000, 100) {
+        timer = new CountDownTimer(time * 1000, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 wrightText(millisUntilFinished);
-
             }
-
             @Override
             public void onFinish() {
                 wrightText("END");

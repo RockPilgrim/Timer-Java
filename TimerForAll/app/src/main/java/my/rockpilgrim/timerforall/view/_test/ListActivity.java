@@ -1,4 +1,4 @@
-package my.rockpilgrim.timerforall.WTesting;
+package my.rockpilgrim.timerforall.view._test;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import my.rockpilgrim.timerforall.R;
-import my.rockpilgrim.timerforall.Timer.TimerFunctional;
-import my.rockpilgrim.timerforall.Timer.TimerHolder1_0;
+import my.rockpilgrim.timerforall.presenter.Timer.Timer;
+import my.rockpilgrim.timerforall.presenter._test.TimerHolder1_0;
 
 public class ListActivity extends AppCompatActivity {
 
-    private TimerHolder1_0 timerHolder;
+/*    private TimerHolder1_0 timerHolder;
     private LinearLayout linearLayout;
 //    private View view;
 
@@ -36,7 +36,7 @@ public class ListActivity extends AppCompatActivity {
             View view = getLayoutInflater().inflate(R.layout.timer_card, null);
             linearLayout.addView(view);
             TextView textView = view.findViewById(R.id.inner_text);
-            final TimerFunctional functional = new TimerFunctional(textView, 10);
+            final Timer functional = new Timer(textView, 10);
             timerHolder.addTimer(i + 1, functional);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -45,5 +45,5 @@ public class ListActivity extends AppCompatActivity {
                 }
             });
         }
-    }
+    }*/
 }

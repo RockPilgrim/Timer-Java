@@ -1,11 +1,13 @@
-package my.rockpilgrim.timerforall.Timer;
+package my.rockpilgrim.timerforall.presenter._test;
 
 import android.util.ArrayMap;
 
 import java.util.ArrayList;
 
+import my.rockpilgrim.timerforall.presenter.Timer.Timer;
+
 public class TimerHolder1_0 {
-    private ArrayMap<Long, TimerFunctional> timerMap;
+    private ArrayMap<Long, Timer> timerMap;
 
 
     public TimerHolder1_0() {
@@ -34,13 +36,13 @@ public class TimerHolder1_0 {
         }
     }
 
-    public void addTimer(long index, TimerFunctional timer) {
+    public void addTimer(long index, Timer timer) {
         timerMap.put(index, timer);
     }
 
 
     public ArrayList getList() {
-        ArrayList<TimerFunctional> list = new ArrayList<>();
+        ArrayList<Timer> list = new ArrayList<>();
         try {
 
             for (int i = 0; i < timerMap.size(); i++) {

@@ -7,7 +7,7 @@
     android:layout_height="120dp"
     android:layout_marginTop="5dp"
     app:cardBackgroundColor="@color/colorCard"
-    tools:context="my.rockpilgrim.timerforall.WTesting.TimerFragment">
+    tools:context="my.rockpilgrim.timerforall.view._test.TimerFragment">
 
     <LinearLayout
         android:id="@+id/settings_panel"

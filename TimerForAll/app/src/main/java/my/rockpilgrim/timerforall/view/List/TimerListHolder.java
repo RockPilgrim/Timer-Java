@@ -1,4 +1,4 @@
-package my.rockpilgrim.timerforall.List;
+package my.rockpilgrim.timerforall.view.List;
 
 import android.util.Log;
 import android.view.View;
@@ -9,8 +9,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import my.rockpilgrim.timerforall.R;
-import my.rockpilgrim.timerforall.Timer.TimerFunctional;
-import my.rockpilgrim.timerforall.Timer.TimerHolder;
+import my.rockpilgrim.timerforall.presenter.Timer.Timer;
+import my.rockpilgrim.timerforall.presenter.Timer.TimerPresenter;
 
 
 public class TimerListHolder extends RecyclerView.ViewHolder {
@@ -18,9 +18,9 @@ public class TimerListHolder extends RecyclerView.ViewHolder {
     public static final String LOG = "THIS_LOG";
     private TextView textBegin;
     private CardView cardView;
-    private TimerHolder timerHolder;
+    private TimerPresenter presenter;
+//    private Timer timer;
 
-//    private TimerFunctional timerFun;
 
     public TimerListHolder(@NonNull View itemView) {
         super(itemView);
@@ -28,30 +28,23 @@ public class TimerListHolder extends RecyclerView.ViewHolder {
         cardView = itemView.findViewById(R.id.card_view);
     }
 
-    public void bindView(int time, int index) {
-        textBegin.setText("Start " + (index + 1));
-        //
-        TimerFunctional timerFun = new TimerFunctional(textBegin, time);
-        onClickListener(index);
-    }
-
     public void bindView(int index) {
         textBegin.setText("Start " + (index + 1));
-        timerHolder.getTimer(index).setTextView(textBegin);
+//        presenter.getTimer(index).setTextView(textBegin);
         onClickListener(index);
     }
 
-    public void setTimerHolder(TimerHolder timerHolder) {
-        this.timerHolder = timerHolder;
+    public void setPresenter(TimerPresenter presenter) {
+        this.presenter = presenter;
+        presenter.getTimer(getAdapterPosition()).setChangeListener(this);
         Log.i(LOG, "Set");
     }
 
+    public void setTimerText(String time) {
+        textBegin.setText(time);
+    }
+
     private void onClickListener(final int index) {
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                timerHolder.start(index);
-            }
-        });
+        cardView.setOnClickListener(v -> presenter.start(index));
     }
 }
