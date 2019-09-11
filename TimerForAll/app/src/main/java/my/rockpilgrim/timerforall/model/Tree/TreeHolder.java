@@ -2,14 +2,14 @@ package my.rockpilgrim.timerforall.model.Tree;
 
 import java.util.ArrayList;
 
-import my.rockpilgrim.timerforall.presenter.Timer.Timer;
+import my.rockpilgrim.timerforall.presenter.timer.Timer;
 
-public class TreeHandler<T extends Timer> {
+public class TreeHolder<T extends Timer> {
 
     public final Node<T> root;
     private ArrayList<Node<T>> childList;
 
-    public TreeHandler() {
+    public TreeHolder() {
         root = new Node<T>(null, null);
         childList = new ArrayList<>();
     }

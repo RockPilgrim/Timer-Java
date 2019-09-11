@@ -4,7 +4,7 @@ import android.util.ArrayMap;
 
 import java.util.ArrayList;
 
-import my.rockpilgrim.timerforall.presenter.Timer.Timer;
+import my.rockpilgrim.timerforall.presenter.timer.Timer;
 
 public class TimerHolder1_0 {
     private ArrayMap<Long, Timer> timerMap;

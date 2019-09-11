@@ -1,16 +1,6 @@
 package my.rockpilgrim.timerforall.view._test;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import my.rockpilgrim.timerforall.R;
-import my.rockpilgrim.timerforall.presenter.Timer.Timer;
-import my.rockpilgrim.timerforall.presenter._test.TimerHolder1_0;
 
 public class ListActivity extends AppCompatActivity {
 

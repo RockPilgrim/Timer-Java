@@ -1,18 +1,21 @@
-package my.rockpilgrim.timerforall.presenter.Timer;
+package my.rockpilgrim.timerforall.presenter.timer;
 
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import my.rockpilgrim.timerforall.view.List.TimerListHolder;
+import my.rockpilgrim.timerforall.presenter.TimeFormat;
+import my.rockpilgrim.timerforall.presenter.detail.TickListener;
+import my.rockpilgrim.timerforall.view.list.TimerListHolder;
 
 public class Timer {
-    public static final String TAG = "Timer";
+    private static final String TAG = "Timer";
     public static final int TIME = 10;
     private CountDownTimer timer;
     private boolean play = false;
     private int time;
     private int index;
-    private TimerPresenter presenter;
+    private TickListener tickListener;
+    private TimeListener timeListener;
     private TimerListHolder listener;
 
 
@@ -29,7 +32,7 @@ public class Timer {
 
     public void start() {
         if (!play) {
-            Log.i(TAG+index, "Start: " + index);
+            Log.i(TAG+index, "Start: ");
             timer.start();
             play = true;
         }
@@ -40,16 +43,19 @@ public class Timer {
             @Override
             public void onTick(long millisUntilFinished) {
                 wrightText(millisUntilFinished);
+                if (tickListener != null) {
+                    tickListener.sendTime(millisUntilFinished);
+                }
             }
 
             @Override
             public void onFinish() {
                 wrightText("END");
                 play = false;
-                Log.i(TAG+index, "END: " + index);
+                Log.i(TAG+index, "END: ");
                 //// ERROR ///////
                 try {
-                    presenter.finish(index);
+                    timeListener.finish(index);
                 } catch (Exception e) {
                     Log.i(TAG+index, "Timer / createTimer: error");
                 }
@@ -59,24 +65,24 @@ public class Timer {
     public void setChangeListener(TimerListHolder listener) {
         this.listener = listener;
     }
+    public void setTickListener(TickListener tickListener) {
+        this.tickListener = tickListener;
+    }
 
     private void wrightText(long millis) {
-        float t = ((float) millis) / 1000;
         if (listener != null) {
-            if (t >= 10) {
-                listener.setTimerText(String.format("%.0f", t));
-            } else if (t < 10) {
-                listener.setTimerText(String.format("%.1f", t));
-            }
+                listener.setTimerText(TimeFormat.getTime(millis));
         }
     }
 
     private void wrightText(String t) {
-        listener.setTimerText(t);
+        if (listener != null) {
+            listener.setTimerText(t);
+        }
     }
 
-    public void setPresenter(TimerPresenter presenter) {
-        this.presenter = presenter;
+    public void setListener(TimeListener listener) {
+        this.timeListener = listener;
     }
 
     public int getIndex() {

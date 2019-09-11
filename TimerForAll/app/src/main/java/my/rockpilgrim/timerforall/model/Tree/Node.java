@@ -2,7 +2,7 @@ package my.rockpilgrim.timerforall.model.Tree;
 
 import java.util.ArrayList;
 
-import my.rockpilgrim.timerforall.presenter.Timer.Timer;
+import my.rockpilgrim.timerforall.presenter.timer.Timer;
 
 public class Node<T extends Timer> {
 
@@ -67,10 +67,6 @@ public class Node<T extends Timer> {
         return index;
     }
 
-/*    public T getChildrenObj() {
-        for ()
-        return children;
-    }*/
 
     public int sizeCildren() {
         return children.size();

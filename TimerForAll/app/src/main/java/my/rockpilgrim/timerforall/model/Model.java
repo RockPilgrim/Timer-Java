@@ -2,41 +2,41 @@ package my.rockpilgrim.timerforall.model;
 
 import java.util.ArrayList;
 
-import my.rockpilgrim.timerforall.model.Tree.TreeHandler;
-import my.rockpilgrim.timerforall.presenter.Timer.Timer;
+import my.rockpilgrim.timerforall.model.Tree.TreeHolder;
+import my.rockpilgrim.timerforall.presenter.timer.Timer;
 
 public class Model {
 
     public static final String TAG = "Model";
 
-    private TreeHandler<Timer> treeTimers;
+    private TreeHolder<Timer> timerList;
 
     public Model() {
-        treeTimers = new TreeHandler<>();
+        timerList = new TreeHolder<>();
     }
 
     public void addTimerToRoot(Timer timer) {
-        treeTimers.addToRoot(timer);
+        timerList.addToRoot(timer);
     }
 
     public void addTimer(int fatherIndex,Timer timer) {
-        treeTimers.addTimer(fatherIndex, timer);
+        timerList.addTimer(fatherIndex, timer);
     }
 
-    public ArrayList getFirstChildList(int index) {
-        return treeTimers.getParentOf(index).getChildren();
+    public ArrayList getBrotherList(int index) {
+        return timerList.getParentOf(index).getChildren();
     }
 
-    public ArrayList getNextChildList(int index) {
-        return treeTimers.getChild(index).getChildren();
+    public ArrayList getChildList(int index) {
+        return timerList.getChild(index).getChildren();
     }
 
     public Timer getTimer(int index) {
-        return treeTimers.getTimer(index);
+        return timerList.getTimer(index);
     }
 
     public int size() {
-        return treeTimers.size();
+        return timerList.size();
     }
 
 }
