@@ -30,11 +30,7 @@ public class DetailPresenter extends MvpPresenter<MvpDetailView> {
     }
 
     private void setMainTime() {
-/*        timerHandler.connectToMainTime(millis -> {
-            getViewState().setMainTime(String.valueOf(millis));
-        },error->{
-            Log.i(TAG, "No main timer");
-        });*/
+
         timerHandler.connectToMainTime(new TickListener() {
             @Override
             public void sendTime(long millis) {
