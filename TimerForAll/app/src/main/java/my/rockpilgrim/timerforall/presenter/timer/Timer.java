@@ -8,12 +8,14 @@ import my.rockpilgrim.timerforall.presenter.detail.TickListener;
 import my.rockpilgrim.timerforall.view.list.TimerListHolder;
 
 public class Timer {
-    private static final String TAG = "Timer";
+    private static final String TAG = "Timer: ";
     public static final int TIME = 10;
+    public static final String MAIN_NAME = "Start ";
     private CountDownTimer timer;
     private boolean play = false;
     private int time;
     private int index;
+    private String name;
     private TickListener tickListener;
     private TimeListener timeListener;
     private TimerListHolder listener;
@@ -21,12 +23,23 @@ public class Timer {
 
     public Timer(int time) {
         this.time = time;
+        name = MAIN_NAME;
         createTimer();
     }
 
     public Timer(int time, int index) {
         this.time = time;
         this.index = index;
+        createTimer();
+    }
+    public Timer(int time, String name) {
+        this.time = time;
+        if (name.equals("")) {
+            this.name = MAIN_NAME;
+
+        } else {
+            this.name = name;
+        }
         createTimer();
     }
 
@@ -57,7 +70,7 @@ public class Timer {
                 try {
                     timeListener.finish(index);
                 } catch (Exception e) {
-                    Log.i(TAG+index, "Timer / createTimer: error");
+                    Log.i(TAG+index, "createTimer / onFinish: error");
                 }
             }
         };
@@ -81,6 +94,14 @@ public class Timer {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setListener(TimeListener listener) {
         this.timeListener = listener;
     }
@@ -91,6 +112,9 @@ public class Timer {
 
     public void setIndex(int index) {
         this.index = index;
+        if (name.equals(MAIN_NAME)) {
+            name = MAIN_NAME + " " + (index+1);
+        }
     }
 
     public int getTime() {

@@ -26,6 +26,10 @@ public class TreeHolder<T extends Timer> {
     }
 
     public void addTimer(int fatherIndex, T son) {
+        if (fatherIndex == -1) {
+            addToRoot(son);
+            return;
+        }
         Node child = new Node<T>(son);
         childList.get(fatherIndex).addChild(child);
         childList.add(child);

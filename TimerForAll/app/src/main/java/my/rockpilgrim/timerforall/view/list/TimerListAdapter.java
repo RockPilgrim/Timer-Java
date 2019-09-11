@@ -17,6 +17,11 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListHolder> {
 
     public TimerListAdapter() {
         listPresenter = new ListPresenter();
+        listPresenter.connectToModel(this::onAcceptChange);
+    }
+
+    private void onAcceptChange() {
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -31,7 +36,8 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TimerListHolder timerListHolder, int index) {
-        timerListHolder.setPresenter(listPresenter);
+//        timerListHolder.setPresenter(listPresenter);
+        timerListHolder.setTimer(listPresenter.getTimer(index));
 //        if (listPresenter.getTimer(index) != null) {
             timerListHolder.bindView(index);
 //        }

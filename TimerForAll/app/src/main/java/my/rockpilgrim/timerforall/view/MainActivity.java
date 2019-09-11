@@ -9,20 +9,33 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import my.rockpilgrim.timerforall.App;
 import my.rockpilgrim.timerforall.R;
+import my.rockpilgrim.timerforall.view.add.AddFragment;
 import my.rockpilgrim.timerforall.view.list.TimerListAdapter;
 import my.rockpilgrim.timerforall.view.detail.DetailFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.floatingActionButton)
+    public FloatingActionButton actionButton;
+
     private RecyclerView recyclerView;
     private TimerListAdapter listAdapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        ButterKnife.bind(this);
         initFragment();
         initList();
     }
@@ -47,4 +60,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(listAdapter);
     }
+
+    @OnClick(R.id.floatingActionButton)
+    public void onActionButtonClick() {
+        AddFragment addFragment = new AddFragment();
+        addFragment.show(getSupportFragmentManager(), "add");
+    }
+
 }

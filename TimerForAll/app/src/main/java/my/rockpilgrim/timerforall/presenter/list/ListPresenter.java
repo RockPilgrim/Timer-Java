@@ -22,7 +22,7 @@ public class ListPresenter {
 
     public ListPresenter() {
         App.getComponent().inject(this);
-        initTimerList();
+//        initTimerList();
     }
 
     private void initTimerList() {
@@ -39,6 +39,10 @@ public class ListPresenter {
 
     public void start(int index) {
         timerHandler.start(index);
+    }
+
+    public void connectToModel(OnListChangeListener listener) {
+        model.setListChangeListener(listener);
     }
 
     public Timer getTimer(int index) {
