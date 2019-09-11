@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TimerForAll</string>
+    <string name="after">After:</string>
+    <string name="next_start">Next start:</string>
 </resources>

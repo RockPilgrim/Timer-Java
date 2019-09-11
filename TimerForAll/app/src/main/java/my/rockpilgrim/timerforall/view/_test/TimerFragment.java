@@ -1,17 +1,17 @@
-package my.timerforall.WTesting;
+package my.rockpilgrim.timerforall.view._test;
 
-import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import my.timerforall.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import my.rockpilgrim.timerforall.R;
 
 public class TimerFragment extends AppCompatActivity {
 
@@ -41,13 +41,11 @@ public class TimerFragment extends AppCompatActivity {
     }
 
     private void createTimer(int time) {
-        timer = new CountDownTimer(6 * 1000, 100) {
+        timer = new CountDownTimer(time * 1000, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 wrightText(millisUntilFinished);
-
             }
-
             @Override
             public void onFinish() {
                 wrightText("END");
@@ -93,7 +91,7 @@ public class TimerFragment extends AppCompatActivity {
                 if (!play) {
                     playTimer();
 //                    settingsPanel.setVisibility(View.GONE);
-                }else {
+                } else {
 //                    settingsPanel.setVisibility(View.VISIBLE);
 //                    pauseTimer();
                 }

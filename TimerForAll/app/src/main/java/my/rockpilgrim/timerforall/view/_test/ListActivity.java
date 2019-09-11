@@ -1,19 +1,10 @@
-package my.timerforall.WTesting;
+package my.rockpilgrim.timerforall.view._test;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import my.timerforall.R;
-import my.timerforall.Timer.TimerFunctional;
-import my.timerforall.Timer.TimerHolder1_0;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ListActivity extends AppCompatActivity {
 
-    private TimerHolder1_0 timerHolder;
+/*    private TimerHolder1_0 timerHolder;
     private LinearLayout linearLayout;
 //    private View view;
 
@@ -24,18 +15,19 @@ public class ListActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.test_list_linear_layout);
 
-        timerHolder=new TimerHolder1_0();
+        timerHolder = new TimerHolder1_0();
         timerHolder.getList();
 
         fillList();
     }
-    private void fillList(){
+
+    private void fillList() {
         for (int i = 0; i < 3; i++) {
-            View view = getLayoutInflater().inflate(R.layout.timer_card,null);
+            View view = getLayoutInflater().inflate(R.layout.timer_card, null);
             linearLayout.addView(view);
             TextView textView = view.findViewById(R.id.inner_text);
-            final TimerFunctional functional = new TimerFunctional(textView, 10);
-            timerHolder.addTimer(i+1,functional);
+            final Timer functional = new Timer(textView, 10);
+            timerHolder.addTimer(i + 1, functional);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -43,5 +35,5 @@ public class ListActivity extends AppCompatActivity {
                 }
             });
         }
-    }
+    }*/
 }
