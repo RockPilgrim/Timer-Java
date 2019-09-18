@@ -10,17 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import my.rockpilgrim.timerforall.R;
 import my.rockpilgrim.timerforall.presenter.list.ListPresenter;
+import my.rockpilgrim.timerforall.presenter.list.OnListPresenter;
 import my.rockpilgrim.timerforall.presenter.timer.Timer;
 
 
 public class TimerListHolder extends RecyclerView.ViewHolder {
 
-    public static final String LOG = "THIS_LOG";
+    private static final String LOG = "TimerListHolder";
     private TextView textBegin;
     private CardView cardView;
     private Timer timer;
 
-    private ListPresenter presenter;
+    private OnListPresenter presenter;
 
 
     public TimerListHolder(@NonNull View itemView) {
@@ -30,16 +31,17 @@ public class TimerListHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindView(int index) {
-//        textBegin.setText(String.format("Start %d", index + 1));
         textBegin.setText(timer.getName());
         onClickListener(index);
     }
 
-    public void setPresenter(ListPresenter presenter) {
+    public void setPresenter(OnListPresenter presenter) {
         this.presenter = presenter;
-        presenter.getTimer(getAdapterPosition()).setChangeListener(this);
+        timer = presenter.getTimer(getAdapterPosition());
+        timer.setChangeListener(this);
         Log.i(LOG, "Set");
     }
+
     public void setTimer(Timer timer) {
         this.timer = timer;
         timer.setChangeListener(this);
@@ -51,6 +53,8 @@ public class TimerListHolder extends RecyclerView.ViewHolder {
     }
 
     private void onClickListener(final int index) {
-        cardView.setOnClickListener(v -> timer.start());
+        cardView.setOnClickListener(v -> {
+            presenter.start(index);
+        });
     }
 }

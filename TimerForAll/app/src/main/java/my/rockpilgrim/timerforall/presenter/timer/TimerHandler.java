@@ -5,25 +5,28 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import my.rockpilgrim.timerforall.model.Model;
-import my.rockpilgrim.timerforall.presenter.detail.TickListener;
+import my.rockpilgrim.timerforall.presenter.TimeFormat;
 
 public class TimerHandler implements TimeListener {
 
     private static final String TAG = "TimerHandler";
     private ArrayList<Timer> currentList;
     public Model model;
-    public TickListener tickListener;
+    private TimeListener notificationListener;
 
     public TimerHandler(Model model) {
         this.model = model;
         currentList = new ArrayList<>();
     }
 
+    public void setNotificationListener(TimeListener notificationListener) {
+        this.notificationListener = notificationListener;
+    }
+
     public void start(int index) {
+        notificationListener.start(index);
         ArrayList<Timer> init = model.getBrotherList(index);
-        if (!currentList.isEmpty()) {
-            currentList.get(0).setTickListener(tickListener);
-        }
+
         if (!init.isEmpty()) {
             for (Timer t : init) {
                 t.setListener(this);
@@ -34,7 +37,9 @@ public class TimerHandler implements TimeListener {
         }
     }
 
+
     public void finish(int index) {
+        notificationListener.finish(index);
         Log.i(TAG, "Finished: " + index);
         currentList.remove(model.getTimer(index));
         ArrayList<Timer> next = model.getChildList(index);
@@ -45,12 +50,11 @@ public class TimerHandler implements TimeListener {
         }
     }
 
-    public void connectToMainTime(TickListener tickListener) {
-        this.tickListener = tickListener;
-        if (!currentList.isEmpty()) {
-            currentList.get(0).setTickListener(tickListener);
-        } else {
-            tickListener.onError("No timer");
+    @Override
+    public void onTick(int index, long millis) {
+//        Log.i(TAG, "Time " + 1000 * (Math.floor(millis / 1000)) + " / " + 100 * (Math.floor(millis / 100)));
+        if (1000 * (Math.floor(millis / 1000)) == 100 * (Math.floor(millis / 100))) {
+            notificationListener.onTick(index,millis);
         }
     }
 }

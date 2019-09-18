@@ -1,6 +1,6 @@
 package my.rockpilgrim.timerforall.presenter.list;
 
-public interface OnListChangeListener {
+public interface OnListChanged {
 
     void onListChange();
 }

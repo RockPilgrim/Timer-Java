@@ -3,14 +3,15 @@ package my.rockpilgrim.timerforall.model;
 import java.util.ArrayList;
 
 import my.rockpilgrim.timerforall.model.Tree.TreeHolder;
-import my.rockpilgrim.timerforall.presenter.list.OnListChangeListener;
+import my.rockpilgrim.timerforall.presenter.list.OnListChanged;
+import my.rockpilgrim.timerforall.presenter.list.OnListPresenter;
 import my.rockpilgrim.timerforall.presenter.timer.Timer;
 
 public class Model {
 
     public static final String TAG = "Model";
 
-    OnListChangeListener listener;
+    OnListChanged listener;
     private TreeHolder<Timer> timerList;
 
     public Model() {
@@ -49,7 +50,7 @@ public class Model {
         return timerList.size();
     }
 
-    public void setListChangeListener(OnListChangeListener listener) {
+    public void setListChangeListener(OnListChanged listener) {
         this.listener = listener;
     }
 }

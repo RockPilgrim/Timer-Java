@@ -4,7 +4,6 @@ import android.os.CountDownTimer;
 import android.util.Log;
 
 import my.rockpilgrim.timerforall.presenter.TimeFormat;
-import my.rockpilgrim.timerforall.presenter.detail.TickListener;
 import my.rockpilgrim.timerforall.view.list.TimerListHolder;
 
 public class Timer {
@@ -16,7 +15,7 @@ public class Timer {
     private int time;
     private int index;
     private String name;
-    private TickListener tickListener;
+
     private TimeListener timeListener;
     private TimerListHolder listener;
 
@@ -32,6 +31,7 @@ public class Timer {
         this.index = index;
         createTimer();
     }
+
     public Timer(int time, String name) {
         this.time = time;
         if (name.equals("")) {
@@ -45,7 +45,7 @@ public class Timer {
 
     public void start() {
         if (!play) {
-            Log.i(TAG+index, "Start: ");
+            Log.i(TAG + index, "Start: ");
             timer.start();
             play = true;
         }
@@ -56,35 +56,32 @@ public class Timer {
             @Override
             public void onTick(long millisUntilFinished) {
                 wrightText(millisUntilFinished);
-                if (tickListener != null) {
-                    tickListener.sendTime(millisUntilFinished);
-                }
+                timeListener.onTick(index, millisUntilFinished);
             }
 
             @Override
             public void onFinish() {
                 wrightText("END");
                 play = false;
-                Log.i(TAG+index, "END: ");
+                Log.i(TAG + index, "END: ");
                 //// ERROR ///////
                 try {
                     timeListener.finish(index);
                 } catch (Exception e) {
-                    Log.i(TAG+index, "createTimer / onFinish: error");
+                    Log.i(TAG + index, "createTimer / onFinish: error");
                 }
             }
         };
     }
+
     public void setChangeListener(TimerListHolder listener) {
         this.listener = listener;
     }
-    public void setTickListener(TickListener tickListener) {
-        this.tickListener = tickListener;
-    }
+
 
     private void wrightText(long millis) {
         if (listener != null) {
-                listener.setTimerText(TimeFormat.getTime(millis));
+            listener.setTimerText(TimeFormat.getTime(millis));
         }
     }
 
@@ -113,7 +110,7 @@ public class Timer {
     public void setIndex(int index) {
         this.index = index;
         if (name.equals(MAIN_NAME)) {
-            name = MAIN_NAME + " " + (index+1);
+            name = MAIN_NAME + " " + (index + 1);
         }
     }
 
