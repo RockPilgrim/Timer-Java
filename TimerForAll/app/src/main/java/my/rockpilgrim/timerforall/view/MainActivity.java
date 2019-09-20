@@ -1,7 +1,11 @@
 package my.rockpilgrim.timerforall.view;
 
+import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +26,7 @@ import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import my.rockpilgrim.timerforall.R;
+import my.rockpilgrim.timerforall.presenter.alarm.AlarmRecever;
 import my.rockpilgrim.timerforall.presenter.list.ListPresenter;
 import my.rockpilgrim.timerforall.view.add.AddFragment;
 import my.rockpilgrim.timerforall.view.list.TimerListAdapter;
@@ -82,12 +87,23 @@ public class MainActivity extends MvpAppCompatActivity implements MvpMainView {
 
     @Override
     public void notification(int index, String title, String text) {
-        Log.i(TAG, "notification");
-
+        Log.i(TAG, "notification"+index);
 
         getBuilder().setContentTitle(title)
                 .setContentText(text);
+        if (text.equals(ListPresenter.FINISHED)) {
+            getNotificationManager().cancel(index);
+        }
         getNotificationManager().notify(index, getBuilder().build());
+    }
+
+    public void alarm() {
+        Log.i(TAG, "AlARM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        AlarmRecever alarmRecever = new AlarmRecever();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmRecever.class);
+
+        alarmManager.notify();
     }
 
     private NotificationCompat.Builder getBuilder() {
@@ -102,6 +118,7 @@ public class MainActivity extends MvpAppCompatActivity implements MvpMainView {
         }
         return builder;
     }
+
 
     private NotificationManager getNotificationManager() {
         if (notificationManager == null) {

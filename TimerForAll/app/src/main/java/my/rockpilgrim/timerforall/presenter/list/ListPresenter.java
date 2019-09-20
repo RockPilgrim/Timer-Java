@@ -25,12 +25,16 @@ public class ListPresenter extends MvpPresenter<MvpMainView> implements OnListPr
 
     public ListPresenter() {
         App.getComponent().inject(this);
-//        initTimerList();
+        initTimerList();
     }
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
+        initNotification();
+    }
+
+    private void initNotification() {
         timerHandler.setNotificationListener(new TimeListener() {
             @Override
             public void start(int index) {
@@ -50,15 +54,9 @@ public class ListPresenter extends MvpPresenter<MvpMainView> implements OnListPr
     }
 
     private void initTimerList() {
-        for (int i = 0; i < 3; i++) {
-            model.addTimerToRoot(new Timer(5 + i));
-        }
-        for (int i = 0; i < 2; i++) {
-           model.addTimer(1, new Timer(5 + i));
-        }
-        for (int i = 0; i < 2; i++) {
-            model.addTimer(4, new Timer(5 + i));
-        }
+        model.addTimer(model.size() - 1, new Timer(3));
+        model.addTimer(model.size() - 1, new Timer(5));
+        model.addTimer(model.size() - 1, new Timer(2));
     }
 
 
