@@ -7,5 +7,6 @@ public interface OnListPresenter {
     void start(int index);
     void connectToModel(OnListChanged listener);
     Timer getTimer(int index);
+    void deleteTimer(int position);
     int size();
 }

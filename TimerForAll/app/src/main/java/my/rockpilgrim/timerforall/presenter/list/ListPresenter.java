@@ -25,7 +25,7 @@ public class ListPresenter extends MvpPresenter<MvpMainView> implements OnListPr
 
     public ListPresenter() {
         App.getComponent().inject(this);
-        initTimerList();
+//        initTimerList();
     }
 
     @Override
@@ -54,9 +54,9 @@ public class ListPresenter extends MvpPresenter<MvpMainView> implements OnListPr
     }
 
     private void initTimerList() {
-        model.addTimer(model.size() - 1, new Timer(3));
-        model.addTimer(model.size() - 1, new Timer(5));
-        model.addTimer(model.size() - 1, new Timer(2));
+        model.addTimer(new Timer(3));
+        model.addTimer(new Timer(4));
+        model.addTimer(new Timer(2));
     }
 
 
@@ -74,6 +74,11 @@ public class ListPresenter extends MvpPresenter<MvpMainView> implements OnListPr
     @Override
     public Timer getTimer(int index) {
         return model.getTimer(index);
+    }
+
+    @Override
+    public void deleteTimer(int position) {
+
     }
 
     @Override

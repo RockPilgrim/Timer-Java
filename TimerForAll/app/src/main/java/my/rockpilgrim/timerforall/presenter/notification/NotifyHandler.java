@@ -11,20 +11,31 @@ import androidx.core.app.NotificationCompat;
 import my.rockpilgrim.timerforall.R;
 import my.rockpilgrim.timerforall.presenter.list.ListPresenter;
 
-public class NotifyUser {
+public class NotifyHandler {
 
     public static final String TIMER_INFO = "Timer info";
     public static final String CHANNEL_ID = "timer_channel_id";
-    public static final String TAG = "NotifyUser";
+    public static final String TAG = "NotifyHandler";
 
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
 
     private Context context;
 
-    public NotifyUser(NotificationManager notificationManager, Context context) {
+    public NotifyHandler(NotificationManager notificationManager, Context context) {
         this.notificationManager = notificationManager;
         this.context = context;
+    }
+
+    public void notify(int index, String title, String text) {
+        Log.i(TAG, "notify"+index);
+
+        getBuilder().setContentTitle(title)
+                .setContentText(text);
+        if (text.equals(ListPresenter.FINISHED)) {
+            getNotificationManager().cancel(index);
+        }
+        getNotificationManager().notify(index, getBuilder().build());
     }
 
     private NotificationCompat.Builder getBuilder() {
@@ -40,21 +51,9 @@ public class NotifyUser {
         return builder;
     }
 
-    public void notification(int index, String title, String text) {
-        Log.i(TAG, "notification"+index);
-
-        getBuilder().setContentTitle(title)
-                .setContentText(text);
-        if (text.equals(ListPresenter.FINISHED)) {
-            getNotificationManager().cancel(index);
-        }
-        getNotificationManager().notify(index, getBuilder().build());
-    }
-
     private NotificationManager getNotificationManager() {
         if (notificationManager == null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                notificationManager = getSystemService(NotificationManager.class);
                 NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "name", NotificationManager.IMPORTANCE_DEFAULT);
                 channel.setDescription(TIMER_INFO);
 

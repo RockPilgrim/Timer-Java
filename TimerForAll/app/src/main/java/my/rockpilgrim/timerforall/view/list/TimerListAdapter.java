@@ -8,11 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import my.rockpilgrim.timerforall.R;
-import my.rockpilgrim.timerforall.presenter.list.ListPresenter;
 import my.rockpilgrim.timerforall.presenter.list.OnListPresenter;
 
 
-public class TimerListAdapter extends RecyclerView.Adapter<TimerListHolder> {
+public class TimerListAdapter extends RecyclerView.Adapter<ListHolder> implements AdapterDeleteListener{
 
     private OnListPresenter listPresenter;
 
@@ -27,16 +26,16 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListHolder> {
 
     @NonNull
     @Override
-    public TimerListHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ListHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.timer_card,
                 viewGroup,
                 false);
-        return new TimerListHolder(itemView);
+        return new ListHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimerListHolder timerListHolder, int index) {
+    public void onBindViewHolder(@NonNull ListHolder timerListHolder, int index) {
         timerListHolder.setPresenter(listPresenter);
 //        timerListHolder.setTimer(listPresenter.getTimer(index));
 //        if (listPresenter.getTimer(index) != null) {
@@ -48,5 +47,11 @@ public class TimerListAdapter extends RecyclerView.Adapter<TimerListHolder> {
     @Override
     public int getItemCount() {
         return listPresenter != null ? listPresenter.size() : 0;
+    }
+
+    @Override
+    public void deleteView(int position) {
+        listPresenter.deleteTimer(position);
+        notifyItemRemoved(position);
     }
 }

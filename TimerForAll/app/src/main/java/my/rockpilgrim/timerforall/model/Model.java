@@ -1,10 +1,13 @@
 package my.rockpilgrim.timerforall.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 import my.rockpilgrim.timerforall.model.Tree.TreeHolder;
 import my.rockpilgrim.timerforall.presenter.list.OnListChanged;
-import my.rockpilgrim.timerforall.presenter.list.OnListPresenter;
 import my.rockpilgrim.timerforall.presenter.timer.Timer;
 
 public class Model {
@@ -13,41 +16,40 @@ public class Model {
 
     OnListChanged listener;
     private TreeHolder<Timer> timerList;
+    private Map<Integer, ArrayList<Timer>> timerMap;
+    private ArrayList<Timer> timers;
 
     public Model() {
         timerList = new TreeHolder<>();
+        timerMap = new TreeMap<>();
+        timers = new ArrayList<>();
     }
 
-    public void addTimerToRoot(Timer timer) {
-        timerList.addToRoot(timer);
+
+    public void addTimer(Timer timer) {
+        timer.setIndex(timers.size());
+        timers.add(timer);
+
         onChange();
     }
 
-    public void addTimer(int fatherIndex,Timer timer) {
-        timerList.addTimer(fatherIndex, timer);
-        onChange();
+    public Timer getTimer(int index) {
+        return timers.get(index);
+    }
+
+    public void delete(int index) {
+        Log.i(TAG, "Delete");
+        timers.remove(index);
+    }
+
+    public int size() {
+        return timers.size();
     }
 
     private void onChange() {
         if (listener != null) {
             listener.onListChange();
         }
-    }
-
-    public ArrayList getBrotherList(int index) {
-        return timerList.getParentOf(index).getChildren();
-    }
-
-    public ArrayList getChildList(int index) {
-        return timerList.getChild(index).getChildren();
-    }
-
-    public Timer getTimer(int index) {
-        return timerList.getTimer(index);
-    }
-
-    public int size() {
-        return timerList.size();
     }
 
     public void setListChangeListener(OnListChanged listener) {

@@ -4,7 +4,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 
 import my.rockpilgrim.timerforall.presenter.TimeFormat;
-import my.rockpilgrim.timerforall.view.list.TimerListHolder;
+import my.rockpilgrim.timerforall.view.list.ListHolder;
 
 public class Timer {
     private static final String TAG = "Timer: ";
@@ -16,8 +16,8 @@ public class Timer {
     private int index;
     private String name;
 
-    private TimeListener timeListener;
-    private TimerListHolder listener;
+    private TimeListener timerHandler;
+    private ListHolder listener;
 
 
     public Timer(int time) {
@@ -56,7 +56,7 @@ public class Timer {
             @Override
             public void onTick(long millisUntilFinished) {
                 wrightText(millisUntilFinished);
-                timeListener.onTick(index, millisUntilFinished);
+                timerHandler.onTick(index, millisUntilFinished);
             }
 
             @Override
@@ -66,7 +66,7 @@ public class Timer {
                 Log.i(TAG + index, "END: ");
                 //// ERROR ///////
                 try {
-                    timeListener.finish(index);
+                    timerHandler.finish(index);
                 } catch (Exception e) {
                     Log.i(TAG + index, "createTimer / onFinish: error");
                 }
@@ -74,7 +74,7 @@ public class Timer {
         };
     }
 
-    public void setChangeListener(TimerListHolder listener) {
+    public void setChangeListener(ListHolder listener) {
         this.listener = listener;
     }
 
@@ -100,7 +100,7 @@ public class Timer {
     }
 
     public void setListener(TimeListener listener) {
-        this.timeListener = listener;
+        this.timerHandler = listener;
     }
 
     public int getIndex() {

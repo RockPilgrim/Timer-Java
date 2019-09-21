@@ -14,9 +14,10 @@ import my.rockpilgrim.timerforall.presenter.list.OnListPresenter;
 import my.rockpilgrim.timerforall.presenter.timer.Timer;
 
 
-public class TimerListHolder extends RecyclerView.ViewHolder {
+public class ListHolder extends RecyclerView.ViewHolder {
 
-    private static final String LOG = "TimerListHolder";
+    private static final String LOG = "ListHolder";
+    public static final String TAG = "ListHolder";
     private TextView textBegin;
     private CardView cardView;
     private Timer timer;
@@ -24,7 +25,7 @@ public class TimerListHolder extends RecyclerView.ViewHolder {
     private OnListPresenter presenter;
 
 
-    public TimerListHolder(@NonNull View itemView) {
+    public ListHolder(@NonNull View itemView) {
         super(itemView);
         textBegin = itemView.findViewById(R.id.inner_text);
         cardView = itemView.findViewById(R.id.card_view);
@@ -32,6 +33,7 @@ public class TimerListHolder extends RecyclerView.ViewHolder {
 
     public void bindView(int index) {
         textBegin.setText(timer.getName());
+        Log.i(TAG, "bind: " + index);
         onClickListener(index);
     }
 

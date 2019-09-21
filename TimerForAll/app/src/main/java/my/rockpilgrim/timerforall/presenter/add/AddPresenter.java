@@ -38,6 +38,6 @@ public class AddPresenter extends MvpPresenter<MvpAddView> {
             getViewState().makeToast("Insert time");
             return;
         }
-        model.addTimer(model.size() - 1, timer);
+        model.addTimer(timer);
     }
 }

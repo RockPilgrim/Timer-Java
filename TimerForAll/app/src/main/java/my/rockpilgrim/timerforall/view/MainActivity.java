@@ -1,19 +1,11 @@
 package my.rockpilgrim.timerforall.view;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,17 +18,16 @@ import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import my.rockpilgrim.timerforall.R;
-import my.rockpilgrim.timerforall.presenter.alarm.AlarmRecever;
 import my.rockpilgrim.timerforall.presenter.list.ListPresenter;
+import my.rockpilgrim.timerforall.presenter.notification.NotifyHandler;
 import my.rockpilgrim.timerforall.view.add.AddFragment;
+import my.rockpilgrim.timerforall.view.list.SwipeController;
 import my.rockpilgrim.timerforall.view.list.TimerListAdapter;
 
 public class MainActivity extends MvpAppCompatActivity implements MvpMainView {
 
 
     public static final String TAG = "MainActivity";
-    public static final String TIMER_INFO = "Timer info";
-    public static final String CHANNEL_ID = "timer_channel_id";
 
     @BindView(R.id.floatingActionButton)
     public FloatingActionButton actionButton;
@@ -44,9 +35,7 @@ public class MainActivity extends MvpAppCompatActivity implements MvpMainView {
     private RecyclerView recyclerView;
     private TimerListAdapter listAdapter;
 
-    private NotificationManager notificationManager;
-
-    private NotificationCompat.Builder builder;
+    private NotifyHandler notifyHandler;
 
     @InjectPresenter
     public ListPresenter presenter;
@@ -64,8 +53,12 @@ public class MainActivity extends MvpAppCompatActivity implements MvpMainView {
 
         ButterKnife.bind(this);
         initList();
+        initNotification();
     }
 
+    private void initNotification() {
+        notifyHandler = new NotifyHandler(getSystemService(NotificationManager.class), this);
+    }
 
 
     private void initList() {
@@ -76,6 +69,10 @@ public class MainActivity extends MvpAppCompatActivity implements MvpMainView {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(listAdapter);
+
+        SwipeController swipeController = new SwipeController(listAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @OnClick(R.id.floatingActionButton)
@@ -87,50 +84,8 @@ public class MainActivity extends MvpAppCompatActivity implements MvpMainView {
 
     @Override
     public void notification(int index, String title, String text) {
-        Log.i(TAG, "notification"+index);
-
-        getBuilder().setContentTitle(title)
-                .setContentText(text);
-        if (text.equals(ListPresenter.FINISHED)) {
-            getNotificationManager().cancel(index);
-        }
-        getNotificationManager().notify(index, getBuilder().build());
-    }
-
-    public void alarm() {
-        Log.i(TAG, "AlARM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        AlarmRecever alarmRecever = new AlarmRecever();
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmRecever.class);
-
-        alarmManager.notify();
-    }
-
-    private NotificationCompat.Builder getBuilder() {
-        if (builder == null) {
-            builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_add)
-                    .setContentTitle("Timer")
-                    .setContentText("Now")
-//                        .setOngoing(running)
-                    .setOnlyAlertOnce(true)
-                    .setAutoCancel(true);
-        }
-        return builder;
-    }
-
-
-    private NotificationManager getNotificationManager() {
-        if (notificationManager == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                notificationManager = getSystemService(NotificationManager.class);
-                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "name", NotificationManager.IMPORTANCE_DEFAULT);
-                channel.setDescription(TIMER_INFO);
-
-                notificationManager.createNotificationChannel(channel);
-            }
-        }
-        return notificationManager;
+        Log.i(TAG, "notification: " + index);
+        notifyHandler.notify(index, title, text);
     }
 
     @Override
