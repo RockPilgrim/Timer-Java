@@ -78,7 +78,7 @@ public class ListPresenter extends MvpPresenter<MvpMainView> implements OnListPr
 
     @Override
     public void deleteTimer(int position) {
-
+        model.delete(position);
     }
 
     @Override

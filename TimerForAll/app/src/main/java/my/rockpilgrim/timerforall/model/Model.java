@@ -40,6 +40,13 @@ public class Model {
     public void delete(int index) {
         Log.i(TAG, "Delete");
         timers.remove(index);
+        refreshTimers();
+    }
+
+    private void refreshTimers() {
+        for (int i = 0; i < size(); i++) {
+            timers.get(i).setIndex(i);
+        }
     }
 
     public int size() {
